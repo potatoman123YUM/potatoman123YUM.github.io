@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- [Previous head content remains the same] -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PETP ethical potatoes</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <style>
-    /* [Previous styles remain the same] */
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
@@ -65,27 +61,17 @@
       font-size: 1.5rem;
       color: #444;
     }
-    .request-btn {
-      display: inline-block;
-      padding: 10px 20px;
-      margin: 30px 10px;
-      background-color: #333;
-      color: #fff;
-      font-size: 1rem;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    .request-btn:hover {
-      background-color: #555;
-    }
     .button-container {
       margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
     }
-    .popup-btn {
+    .request-btn, .popup-btn, .donate-btn {
       display: inline-block;
       padding: 10px 20px;
       margin: 30px 10px;
-      background-color: #4CAF50;
       color: #fff;
       font-size: 1rem;
       text-decoration: none;
@@ -93,8 +79,23 @@
       cursor: pointer;
       border: none;
     }
+    .request-btn {
+      background-color: #333;
+    }
+    .request-btn:hover {
+      background-color: #555;
+    }
+    .popup-btn {
+      background-color: #4CAF50;
+    }
     .popup-btn:hover {
       background-color: #45a049;
+    }
+    .donate-btn {
+      background-color: #ff6b6b;
+    }
+    .donate-btn:hover {
+      background-color: #ff5252;
     }
     .popup-overlay {
       position: fixed;
@@ -179,10 +180,11 @@
     <div class="button-container">
       <a href="https://us.makeforms.co/xci2eda/" class="request-btn">Report Someone for Unethical Potatoing</a>
       <button class="popup-btn" onclick="toggleEmailPopup()">View Email Exchange</button>
+      <a href="https://buymeacoffee.com/petp" class="donate-btn">Support Potato Rights 🥔</a>
     </div>
   </div>
 
-  <!-- [Email Popup content remains the same] -->
+  <!-- Email Popup -->
   <div class="popup-overlay" id="emailPopup">
     <div class="popup-content">
       <button class="close-btn" onclick="toggleEmailPopup()">×</button>
