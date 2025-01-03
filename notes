@@ -1,0 +1,260 @@
+
+
+<!-- ethics.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PETP - Potato Ethics</title>
+    <link rel="stylesheet" href="logo.css">
+    <style>
+        .main-content {
+            padding: 20px;
+        }
+        nav {
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        nav a {
+            margin-right: 15px;
+        }
+        .ethics-section {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="ethics.html">Potato Ethics</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="report.html">Report Violations</a>
+    </nav>
+
+    <div class="main-content">
+        <h1>Ethical Potato Treatment Guidelines</h1>
+
+        <div class="ethics-section">
+            <h2>Proper Farming Practices</h2>
+            <ul>
+                <li>Adequate spacing between plants (minimum 12 inches)</li>
+                <li>Proper soil preparation with organic matter</li>
+                <li>Gentle harvesting techniques</li>
+                <li>Clean storage facilities</li>
+            </ul>
+        </div>
+
+        <div class="ethics-section">
+            <h2>Ethical Storage</h2>
+            <ul>
+                <li>Cool, dark environments (45-50°F)</li>
+                <li>Good ventilation</li>
+                <li>No overcrowding</li>
+                <li>Regular inspection for dignity</li>
+            </ul>
+        </div>
+
+        <div class="ethics-section">
+            <h2>Transport Guidelines</h2>
+            <ul>
+                <li>Proper cushioning during transport</li>
+                <li>Temperature-controlled vehicles</li>
+                <li>Gentle handling during loading/unloading</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contact: info@petp.org</p>
+    </footer>
+</body>
+</html>
+
+<!-- evidence.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PETP - Evidence</title>
+    <link rel="stylesheet" href="logo.css">
+    <style>
+        .main-content {
+            padding: 20px;
+        }
+        nav {
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        nav a {
+            margin-right: 15px;
+        }
+        .blur-container {
+            margin: 20px 0;
+            position: relative;
+        }
+        .blurred {
+            filter: blur(20px);
+        }
+        .warning-overlay {
+            padding: 10px;
+            background: rgba(255, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .content-warning {
+            color: red;
+            font-weight: bold;
+        }
+        .evidence-section {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="ethics.html">Potato Ethics</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="report.html">Report Violations</a>
+    </nav>
+
+    <div class="main-content">
+        <h1>Evidence of Unethical Treatment</h1>
+        
+        <div class="warning-overlay">
+            <p class="content-warning">⚠️ CONTENT WARNING ⚠️</p>
+            <p>The following page contains disturbing images of potato mistreatment. These images are blurred by default to protect sensitive viewers. Click the "Show Image" button below each image if you wish to view them.</p>
+            <p>Warning: These images may be distressing and affect your appetite.</p>
+        </div>
+        
+        <div class="evidence-section">
+            <h3>Exhibit A: Overcrowded Storage Conditions</h3>
+            <div class="blur-container">
+                <img src="Pain.png" alt="Overcrowded potato storage conditions" class="blurred" id="img1">
+                <button onclick="toggleBlur('img1')">Show/Hide Image</button>
+            </div>
+            <p>Documentation of potatoes stored in inhumane conditions without proper spacing or ventilation.</p>
+        </div>
+
+        <div class="evidence-section">
+            <h3>Exhibit B: Harsh Handling Practices</h3>
+            <div class="blur-container">
+                <img src="Pain2.png" alt="Rough potato handling" class="blurred" id="img2">
+                <button onclick="toggleBlur('img2')">Show/Hide Image</button>
+            </div>
+            <p>Evidence of mechanical harvesting causing unnecessary trauma to potatoes.</p>
+        </div>
+
+        <div class="evidence-section">
+            <h3>Exhibit C: Negligent Transport Methods</h3>
+            <div class="blur-container">
+                <img src="Pain3.png" alt="Poor transport conditions" class="blurred" id="img3">
+                <button onclick="toggleBlur('img3')">Show/Hide Image</button>
+            </div>
+            <p>Documentation of potatoes being transported without proper care or protection.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleBlur(imgId) {
+            const img = document.getElementById(imgId);
+            img.classList.toggle('blurred');
+        }
+    </script>
+
+    <footer>
+        <p>Contact: info@petp.org</p>
+    </footer>
+</body>
+</html>
+
+<!-- report.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PETP - Report Violations</title>
+    <link rel="stylesheet" href="logo.css">
+    <style>
+        .main-content {
+            padding: 20px;
+        }
+        nav {
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        nav a {
+            margin-right: 15px;
+        }
+        .report-form {
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+        }
+        button {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="ethics.html">Potato Ethics</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="report.html">Report Violations</a>
+    </nav>
+
+    <div class="main-content">
+        <h1>Report Ethical Violations</h1>
+        
+        <p>Use this form to report instances of potato mistreatment. All reports are confidential.</p>
+        
+        <div class="report-form">
+            <form action="/submit-report" method="POST">
+                <div class="form-group">
+                    <label for="location">Location of Incident:</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date of Incident:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description of Incident:</label>
+                    <textarea id="description" name="description" rows="5" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="evidence">Upload Evidence (if available):</label>
+                    <input type="file" id="evidence" name="evidence">
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">Your Contact Information (optional):</label>
+                    <input type="email" id="contact" name="contact" placeholder="email@example.com">
+                </div>
+
+                <button type="submit">Submit Report</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contact: info@petp.org</p>
+    </footer>
+</body>
+</html>
