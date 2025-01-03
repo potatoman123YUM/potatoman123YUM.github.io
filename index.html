@@ -1,49 +1,117 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PETP (People for Ethical Treatment of Potatoes)</title>
+    <title>PETP - People for Ethical Treatment of Potatoes</title>
     <link rel="stylesheet" href="logo.css">
-    <style>
-        .main-content {
-            padding: 20px;
-        }
-        nav {
-            padding: 10px;
-            background: #f0f0f0;
-        }
-        nav a {
-            margin-right: 15px;
-        }
-    </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="ethics.html">Potato Ethics</a>
-        <a href="evidence.html">Evidence</a>
-        <a href="report.html">Report Violations</a>
-    </nav>
-    
-    <div class="main-content">
-        <h1>People for Ethical Treatment of Potatoes</h1>
-        <p>Welcome to PETP. We advocate for the ethical treatment of potatoes in farming and food production.</p>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ethics.html">Potato Ethics</a></li>
+                <li><a href="recipes.html">Ethical Recipes</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Index.html content -->
+    <main>
+        <h1>Welcome to People for Ethical Treatment of Potatoes</h1>
+        <p>We are dedicated to promoting ethical potato farming and consumption practices.</p>
         
-        <h2>Our Mission</h2>
-        <p>Protecting potatoes from unethical farming practices and promoting responsible potato care worldwide, also remove bad french fry, recipes and prevent over mashing the mashed potatoes as you know, I really hated my dad, big chunks of potato with my mashed potato ugg.</p>
+        <section>
+            <h2>Our Mission</h2>
+            <p>To ensure every potato is treated with respect from farm to plate.</p>
+        </section>
+
+        <section>
+            <h2>Latest News</h2>
+            <article>
+                <h3>Campaign Against Harsh Peeling Practices</h3>
+                <p>Join our movement for gentler potato peeling methods.</p>
+            </article>
+        </section>
+    </main>
+
+    <!-- Ethics.html content -->
+    <div id="ethics-page" style="display: none;">
+        <h1>Potato Ethics</h1>
         
-        <h2>Latest Updates</h2>
-        <ul>
-            <li>New guidelines for ethical harvesting released</li>
-            <li>Report on storage conditions in major facilities</li>
-            <li>Advocacy for gentler farming practices</li>
-        </ul>
+        <section>
+            <h2>Ethical Farming Practices</h2>
+            <ul>
+                <li>Proper soil preparation</li>
+                <li>Sustainable irrigation</li>
+                <li>Gentle harvesting techniques</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Common Unethical Practices</h2>
+            <p>We advocate against:</p>
+            <ul>
+                <li>Overcrowded potato fields</li>
+                <li>Harsh mechanical harvesting</li>
+                <li>Poor storage conditions</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Recipes.html content -->
+    <div id="recipes-page" style="display: none;">
+        <h1>Ethical French Fry Recipes</h1>
+
+        <article>
+            <h2>Perfect Baked French Fries</h2>
+            <p>A gentle, oil-minimal approach to crispy fries.</p>
+            <ul>
+                <li>Clean potatoes with care</li>
+                <li>Cut into even strips</li>
+                <li>Soak in warm water</li>
+                <li>Pat dry with soft towel</li>
+                <li>Bake at 425°F (218°C)</li>
+            </ul>
+        </article>
+
+        <article>
+            <h2>Air-Fried Potato Wedges</h2>
+            <p>A kind approach to crispy wedges.</p>
+            <ul>
+                <li>Wash potatoes gently</li>
+                <li>Cut into wedges</li>
+                <li>Season thoughtfully</li>
+                <li>Air fry at 380°F (193°C)</li>
+            </ul>
+        </article>
+    </div>
+
+    <!-- About.html content -->
+    <div id="about-page" style="display: none;">
+        <h1>About PETP</h1>
+        
+        <section>
+            <h2>Our Story</h2>
+            <p>Founded by passionate potato advocates, PETP works to promote better treatment of potatoes worldwide.</p>
+        </section>
+
+        <section>
+            <h2>Join Our Cause</h2>
+            <p>Become a member and help us promote ethical potato treatment:</p>
+            <form>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <button type="submit">Join Us</button>
+            </form>
+        </section>
     </div>
 
     <footer>
-        <p>Contact: info@petp.org</p>
+        <p>© 2025 People for Ethical Treatment of Potatoes. All rights reserved.</p>
+        <p>Contact us: info@petp.org</p>
     </footer>
 </body>
 </html>
