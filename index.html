@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PETP ethical potatoes</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -32,7 +34,7 @@
     }
     .sensitive-images img {
       width: 100%;
-      filter: blur(5px); /* Start with blurred images */
+      filter: blur(5px);
       transition: filter 0.3s ease;
     }
     .sensitive-content-bar {
@@ -44,7 +46,7 @@
       font-size: 1.2rem;
       text-align: center;
       padding: 5px 0;
-      display: block; /* Text is visible initially */
+      display: block;
       z-index: 1;
     }
     .eyeball-icon {
@@ -74,35 +76,151 @@
     .request-btn:hover {
       background-color: #555;
     }
+
+    /* Email Popup Styles */
+    .popup-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+      border: none;
+    }
+    .popup-btn:hover {
+      background-color: #45a049;
+    }
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 800px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .close-btn {
+      position: sticky;
+      top: 0;
+      right: 0;
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 5px;
+    }
+    .email-section {
+      margin: 20px 0;
+      padding: 15px;
+      border-left: 4px solid;
+      text-align: left;
+    }
+    .petp-section {
+      border-color: #4CAF50;
+    }
+    .pepsi-section {
+      border-color: #0077BE;
+    }
+    .company-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .company-logo {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
   </style>
 </head>
 <body>
-
   <h1>Ethical Potatoes</h1>
-
   <div class="content">
     <img src="logo.png" alt="Logo" class="logo">
     
+    <button class="popup-btn" onclick="toggleEmailPopup()">View Email Exchange</button>
+
     <div class="mission">
       <p>Our mission: We want to protect potatoes and ensure ethical practices in their preparation!</p>
-      <p>Over-mashing potatoes is harmful! It destroys the texture and integrity of the potato, and it’s just wrong. Plus, big chunks of mashed potatoes are disgusting. We are also fighting to put an end to horrible French fry recipes that make them tasteless and ugly, and we’re taking action to stop these bad practices. Together, we’ll make potatoes great again!</p>
+      <p>Over-mashing potatoes is harmful! It destroys the texture and integrity of the potato, and it's just wrong. Plus, big chunks of mashed potatoes are disgusting. We are also fighting to put an end to horrible French fry recipes that make them tasteless and ugly, and we're taking action to stop these bad practices. Together, we'll make potatoes great again!</p>
     </div>
-
+    
     <div class="sensitive-images" onclick="toggleBlur(this)">
       <div class="sensitive-content-bar">Sensitive Content</div>
       <img src="Pain.png" alt="Potato Pain">
       <div class="eyeball-icon">👁️</div>
     </div>
-
  
-
     <div class="sensitive-images" onclick="toggleBlur(this)">
       <div class="sensitive-content-bar">Sensitive Content</div>
       <img src="Pain3.png" alt="Potato Pain">
       <div class="eyeball-icon">👁️</div>
     </div>
-
+    
     <a href="https://us.makeforms.co/xci2eda/" class="request-btn">Report Someone for Unethical Potatoing</a>
+  </div>
+
+  <!-- Email Popup -->
+  <div class="popup-overlay" id="emailPopup">
+    <div class="popup-content">
+      <button class="close-btn" onclick="toggleEmailPopup()">×</button>
+      
+      <!-- PETP Email -->
+      <div class="email-section petp-section">
+        <div class="company-header">
+          <img src="logo.png" alt="PETP Logo" class="company-logo">
+          <h3 style="color: #4CAF50">PETP (People for the Ethical Treatment of Potatoes)</h3>
+        </div>
+        <p>Dear Lay's Team,</p>
+        <p>I hope this email finds you well. My name is Joshua Ryan, and I am the CEO, Founder, and Investigator at People for the Ethical Treatment of Potatoes (PETP). Our organization is committed to advocating for the ethical treatment and responsible sourcing of potatoes, with our work highlighted on SaveThePotatoes.org.</p>
+        <p>Lay's has become a household name for potato products, and I am impressed by the consistent quality of your chips. Given our mission, I am reaching out to learn more about your farming practices, including how you ensure ethical and sustainable treatment of potatoes during cultivation and harvesting.</p>
+        <p>Could you also share information on the quality standards you apply throughout your production process, from sourcing to the final packaging of your products? This insight is vital to PETP's efforts in promoting ethical practices across the potato industry.</p>
+        <p>Thank you for your time and attention. I look forward to your response.</p>
+        <p>
+          Best regards,<br>
+          Joshua Ryan<br>
+          CEO, Founder, and Investigator<br>
+          People for the Ethical Treatment of Potatoes (PETP)<br>
+          SaveThePotatoes.org
+        </p>
+      </div>
+
+      <!-- PepsiCo Email -->
+      <div class="email-section pepsi-section">
+        <div class="company-header">
+          <img src="pco.png" alt="PepsiCo Logo" class="company-logo">
+          <h3 style="color: #0077BE">PepsiCo</h3>
+        </div>
+        <p>Hi Joshua,</p>
+        <p>Thank you for contacting us.</p>
+        <p>Our potatoes are sourced from 120 different farms in 27 states. We're unable to tell you exactly where an ingredient is from because we purchase our commodities according to price and availability. Weather and growing conditions play a big part in ingredient sourcing.</p>
+        <p>Thanks again for reaching out to us. We value your loyalty and truly appreciate your business!</p>
+        <p>
+          Best Regards,<br>
+          Checarra<br>
+          Team PepsiCo<br>
+          PepsiCo Consumer Experience
+        </p>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -110,19 +228,28 @@
       const img = element.querySelector('img');
       const sensitiveContent = element.querySelector('.sensitive-content-bar');
       const eyeball = element.querySelector('.eyeball-icon');
-
       const currentFilter = img.style.filter;
       if (currentFilter === 'blur(5px)') {
         img.style.filter = 'none';
-        sensitiveContent.style.display = 'none'; // Hide text when unblurred
-        eyeball.style.display = 'none'; // Hide eyeball when unblurred
+        sensitiveContent.style.display = 'none';
+        eyeball.style.display = 'none';
       } else {
         img.style.filter = 'blur(5px)';
-        sensitiveContent.style.display = 'block'; // Show text when blurred
-        eyeball.style.display = 'block'; // Show eyeball when blurred
+        sensitiveContent.style.display = 'block';
+        eyeball.style.display = 'block';
+      }
+    }
+
+    function toggleEmailPopup() {
+      const popup = document.getElementById('emailPopup');
+      if (popup.style.display === 'flex') {
+        popup.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      } else {
+        popup.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
       }
     }
   </script>
-
 </body>
 </html>
