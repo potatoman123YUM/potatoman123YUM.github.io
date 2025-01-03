@@ -28,10 +28,12 @@
       position: relative;
       display: inline-block;
       margin: 20px;
+      cursor: pointer;
     }
     .sensitive-images img {
       width: 100%;
-      filter: blur(5px);
+      filter: blur(5px); /* Start with blurred images */
+      transition: filter 0.3s ease;
     }
     .eyeball-icon {
       position: absolute;
@@ -73,23 +75,31 @@
       <p>We work to stop the over-mashing of potatoes. A big chunk of mashed potatoes is disgusting, and we are against it. We're also fighting against the illegal use of iPhone 5s in the potato industry. We need to stop blueberries from affecting potato growing and make sure potatoes are cultivated properly.</p>
     </div>
 
-    <div class="sensitive-images">
+    <div class="sensitive-images" onclick="toggleBlur(this)">
       <img src="Pain.png" alt="Potato Pain">
       <div class="eyeball-icon">👁️</div>
     </div>
 
-    <div class="sensitive-images">
+    <div class="sensitive-images" onclick="toggleBlur(this)">
       <img src="pain2.png" alt="Potato Pain">
       <div class="eyeball-icon">👁️</div>
     </div>
 
-    <div class="sensitive-images">
+    <div class="sensitive-images" onclick="toggleBlur(this)">
       <img src="pain3.png" alt="Potato Pain">
       <div class="eyeball-icon">👁️</div>
     </div>
 
     <a href="report.html" class="request-btn">Request Off</a>
   </div>
+
+  <script>
+    function toggleBlur(element) {
+      const img = element.querySelector('img');
+      const currentFilter = img.style.filter;
+      img.style.filter = currentFilter === 'blur(5px)' ? 'none' : 'blur(5px)';
+    }
+  </script>
 
 </body>
 </html>
