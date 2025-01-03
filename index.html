@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ethical Potatoes</title>
+  <title>PETP ethical potatoes</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -74,6 +74,81 @@
     .request-btn:hover {
       background-color: #555;
     }
+    .button {
+        background-color: #4caf50;
+        color: white;
+        padding: 15px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .button:hover {
+        background-color: #45a049;
+    }
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+        z-index: 1000;
+        width: 80%;
+        max-width: 500px;
+    }
+    .popup-header {
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+    .popup-body {
+        margin-top: 15px;
+        font-size: 16px;
+    }
+    .popup-body .user-message {
+        background-color: #d1ecf1;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        color: #0c5460;
+    }
+    .popup-body .response-message {
+        background-color: #f8d7da;
+        padding: 15px;
+        border-radius: 8px;
+        color: #721c24;
+    }
+    .popup-footer {
+        margin-top: 20px;
+        text-align: right;
+    }
+    .close-btn {
+        background-color: #f44336;
+        color: white;
+        padding: 10px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .close-btn:hover {
+        background-color: #e53935;
+    }
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 999;
+    }
   </style>
 </head>
 <body>
@@ -105,24 +180,27 @@
     <a href="https://us.makeforms.co/xci2eda/" class="request-btn">Report Someone for Unethical Potatoing</a>
   </div>
 
-  <script>
-    function toggleBlur(element) {
-      const img = element.querySelector('img');
-      const sensitiveContent = element.querySelector('.sensitive-content-bar');
-      const eyeball = element.querySelector('.eyeball-icon');
+  <button class="button" onclick="showPopup()">Show Pop-Up</button>
 
-      const currentFilter = img.style.filter;
-      if (currentFilter === 'blur(5px)') {
-        img.style.filter = 'none';
-        sensitiveContent.style.display = 'none'; // Hide text when unblurred
-        eyeball.style.display = 'none'; // Hide eyeball when unblurred
-      } else {
-        img.style.filter = 'blur(5px)';
-        sensitiveContent.style.display = 'block'; // Show text when blurred
-        eyeball.style.display = 'block'; // Show eyeball when blurred
-      }
-    }
-  </script>
+  <div id="overlay"></div>
 
-</body>
-</html>
+  <div id="popup" class="popup">
+      <div class="popup-header">Message Exchange</div>
+      <div class="popup-body">
+          <div class="user-message">
+              <p>Subject: Inquiry About Potato Farming Practices and Quality Standards</p>
+              <p>Dear Lay’s Team,</p>
+              <p>I hope this email finds you well. My name is Joshua Ryan, and I am the CEO, Founder, and Investigator at People for the Ethical Treatment of Potatoes (PETP). Our organization is committed to advocating for the ethical treatment and responsible sourcing of potatoes, with our work highlighted on SaveThePotatoes.org.</p>
+              <p>Lay’s has become a household name for potato products, and I am impressed by the consistent quality of your chips. Given our mission, I am reaching out to learn more about your farming practices, including how you ensure ethical and sustainable treatment of potatoes during cultivation and harvesting.</p>
+              <p>Could you also share information on the quality standards you apply throughout your production process, from sourcing to the final packaging of your products? This insight is vital to PETP’s efforts in promoting ethical practices across the potato industry.</p>
+              <p>Thank you for your time and attention. I look forward to your response.</p>
+              <p>Best regards,<br>Joshua Ryan<br>CEO, Founder, and Investigator<br>People for the Ethical Treatment of Potatoes (PETP)<br>SaveThePotatoes.org</p>
+          </div>
+          <div class="response-message">
+              <p>Hi Joshua,</p>
+              <p>Thank you for contacting us. Our potatoes are sourced from 120 different farms in 27 states. We're unable to tell you exactly where an ingredient is from because we purchase our commodities according to price and availability. Weather and growing conditions play a big part in ingredient sourcing.</p>
+              <p>Thanks again for reaching out to us. We value your loyalty and truly appreciate your business!</p>
+              <p>Best Regards,</p>
+              <p>Checarra<br>Team PepsiCo<br>PepsiCo Consumer Experience</p>
+          </div>
+      </div>
