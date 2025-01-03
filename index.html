@@ -35,6 +35,18 @@
       filter: blur(5px); /* Start with blurred images */
       transition: filter 0.3s ease;
     }
+    .sensitive-content-bar {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background-color: rgba(255, 0, 0, 0.7);
+      color: #fff;
+      font-size: 1.2rem;
+      text-align: center;
+      padding: 5px 0;
+      display: block; /* Text is visible initially */
+      z-index: 1;
+    }
     .eyeball-icon {
       position: absolute;
       top: 50%;
@@ -42,6 +54,7 @@
       transform: translate(-50%, -50%);
       font-size: 2rem;
       color: #fff;
+      z-index: 2;
     }
     .mission {
       margin-top: 40px;
@@ -76,16 +89,19 @@
     </div>
 
     <div class="sensitive-images" onclick="toggleBlur(this)">
+      <div class="sensitive-content-bar">Sensitive Content</div>
       <img src="Pain.png" alt="Potato Pain">
       <div class="eyeball-icon">👁️</div>
     </div>
 
     <div class="sensitive-images" onclick="toggleBlur(this)">
+      <div class="sensitive-content-bar">Sensitive Content</div>
       <img src="pain2.png" alt="Potato Pain">
       <div class="eyeball-icon">👁️</div>
     </div>
 
     <div class="sensitive-images" onclick="toggleBlur(this)">
+      <div class="sensitive-content-bar">Sensitive Content</div>
       <img src="pain3.png" alt="Potato Pain">
       <div class="eyeball-icon">👁️</div>
     </div>
@@ -96,8 +112,19 @@
   <script>
     function toggleBlur(element) {
       const img = element.querySelector('img');
+      const sensitiveContent = element.querySelector('.sensitive-content-bar');
+      const eyeball = element.querySelector('.eyeball-icon');
+
       const currentFilter = img.style.filter;
-      img.style.filter = currentFilter === 'blur(5px)' ? 'none' : 'blur(5px)';
+      if (currentFilter === 'blur(5px)') {
+        img.style.filter = 'none';
+        sensitiveContent.style.display = 'none'; // Hide text when unblurred
+        eyeball.style.display = 'none'; // Hide eyeball when unblurred
+      } else {
+        img.style.filter = 'blur(5px)';
+        sensitiveContent.style.display = 'block'; // Show text when blurred
+        eyeball.style.display = 'block'; // Show eyeball when blurred
+      }
     }
   </script>
 
