@@ -1,63 +1,159 @@
+/* General body styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
     margin: 0;
     padding: 0;
+    color: #333;
 }
 
+/* Header Styling */
 header {
     background-color: #3e8e41;
     color: white;
-    padding: 20px;
+    padding: 30px 20px;
     text-align: center;
+    border-bottom: 5px solid #2d6a2f;
 }
 
 header img {
-    width: 100px;
+    width: 120px;
     height: auto;
+    margin-bottom: 10px;
 }
 
+header h1 {
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+header p {
+    font-size: 1.4rem;
+    margin-top: 10px;
+}
+
+/* Navigation Styling */
 nav ul {
     list-style-type: none;
     padding: 0;
+    text-align: center;
 }
 
 nav ul li {
-    display: inline;
-    margin-right: 10px;
+    display: inline-block;
+    margin: 0 15px;
 }
 
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #333;
+nav ul li a {
+    text-decoration: none;
     color: white;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
 }
 
+nav ul li a:hover {
+    color: #ffeb3b;  /* Hover effect */
+}
+
+/* Section Styling */
 section {
-    padding: 20px;
-    margin: 20px;
+    padding: 40px 20px;
+    margin: 20px auto;
     background-color: white;
+    border-radius: 10px;
+    max-width: 1200px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #3e8e41;
+}
+
+section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto 20px;
+}
+
+section ul {
+    padding-left: 20px;
+    text-align: left;
+}
+
+section ul li {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Potato Gore images styling */
+section img {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
     border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Styling */
+form {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 40px auto;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 form label {
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 form input, form textarea {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
 }
 
 form input[type="submit"] {
     background-color: #3e8e41;
     color: white;
     border: none;
+    padding: 15px 25px;
+    font-size: 1.2rem;
     cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #2d6a2f;
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    border-top: 5px solid #2d6a2f;
+}
+
+footer p {
+    margin: 0;
 }
