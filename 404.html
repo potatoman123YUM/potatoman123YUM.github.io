@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: url('404.png') no-repeat center top;
+            background-size: cover;
+            color: black;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .message {
+            position: absolute;
+            top: 70%; /* Adjust this to place the text lower */
+            width: 100%;
+            font-size: 2em;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        You will return to the main PETP page in <span id="countdown">10</span> seconds...
+    </div>
+
+    <script>
+        let countdown = 10;
+        const countdownElement = document.getElementById("countdown");
+        
+        const timer = setInterval(function() {
+            countdown--;
+            countdownElement.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = "https://SaveThePotatoes.org";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
