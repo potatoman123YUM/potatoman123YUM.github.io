@@ -13,20 +13,41 @@
             justify-content: center;
             align-items: center;
             background-color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 2em;
+            text-align: center;
         }
     </style>
 </head>
 <body>
+    <div id="message"></div>
+
     <script>
-        let countdown = 10;
-        
-        const timer = setInterval(function() {
-            countdown--;
-            if (countdown <= 0) {
-                clearInterval(timer);
-                window.location.href = "https://SaveThePotatoes.org/funny";
+        let messageElement = document.getElementById("message");
+
+        const messages = [
+            { text: "Hello!", duration: 1000 },
+            { text: "I'm Josh", duration: 2000 },
+            { text: "I love making stupid websites like this", duration: 2000 },
+            { text: "I made ILoveTacoBell.love before this", duration: 3000 },
+            { text: "It was fun", duration: 1000 },
+            { text: "I'm running out of time so bye! Have a good day!", duration: 2000 },
+            { text: "Redirecting...", duration: 1000 }
+        ];
+
+        let currentMessage = 0;
+
+        function showNextMessage() {
+            if (currentMessage < messages.length) {
+                messageElement.textContent = messages[currentMessage].text;
+                setTimeout(showNextMessage, messages[currentMessage].duration);
+                currentMessage++;
+            } else {
+                window.location.href = "https://SaveThePotatoes.org";
             }
-        }, 1000);
+        }
+
+        showNextMessage();
     </script>
 </body>
 </html>
