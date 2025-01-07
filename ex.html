@@ -18,6 +18,7 @@
             padding: 20px;
             height: 100vh;
             overflow-y: auto;
+            white-space: pre-wrap;
         }
 
         .command-line {
@@ -35,11 +36,23 @@
             outline: none;
             width: 100%;
             font-family: 'Roboto Mono', monospace;
+            caret-color: #33ff00; /* This makes the cursor green */
         }
 
         .output {
             color: #66cc66;
         }
+
+        .blink-cursor {
+            animation: blink 0.8s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -55,6 +68,9 @@
         const terminal = document.getElementById('terminal');
         const commandInput = document.getElementById('commandInput');
 
+        // Add a blinking cursor to the input field
+        commandInput.classList.add('blink-cursor');
+
         commandInput.addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
                 handleCommand(commandInput.value);
@@ -68,11 +84,53 @@
             commandLine.classList.add('command-line');
             commandLine.innerHTML = `<span>$</span> ${command}`;
 
-            output.classList.add('output');
-            output.textContent = `You entered: ${command}`;
+            // Command Handling
+            if (command === 'hello') {
+                output.classList.add('output');
+                output.textContent = 'Hello, user!';
+            } else if (command === 'clear') {
+                clearTerminal();
+                return;
+            } else if (command === 'date') {
+                output.classList.add('output');
+                output.textContent = `Current date and time: ${new Date().toLocaleString()}`;
+            } else {
+                output.classList.add('output');
+                output.textContent = `Command not recognized: ${command}`;
+            }
 
+            // Append the command and output
             terminal.appendChild(commandLine);
             terminal.appendChild(output);
+
+            // Add new input line
+            const newCommandLine = document.createElement('div');
+            newCommandLine.classList.add('command-line');
+            newCommandLine.innerHTML = `<span>$</span>`;
+            const newInput = document.createElement('input');
+            newInput.type = "text";
+            newInput.classList.add('blink-cursor');
+            newCommandLine.appendChild(newInput);
+            terminal.appendChild(newCommandLine);
+
+            // Focus the new input field
+            newInput.focus();
+
+            scrollToBottom();
+        }
+
+        function clearTerminal() {
+            terminal.innerHTML = '';
+            const initialCommandLine = document.createElement('div');
+            initialCommandLine.classList.add('command-line');
+            initialCommandLine.innerHTML = `<span>$</span>`;
+            const initialInput = document.createElement('input');
+            initialInput.type = "text";
+            initialInput.classList.add('blink-cursor');
+            initialCommandLine.appendChild(initialInput);
+            terminal.appendChild(initialCommandLine);
+
+            initialInput.focus();
             scrollToBottom();
         }
 
