@@ -52,6 +52,14 @@
                 border-color: transparent;
             }
         }
+
+        .loading {
+            color: #ff6600;
+        }
+
+        .file-deletion {
+            color: #ff3333;
+        }
     </style>
 </head>
 <body>
@@ -88,15 +96,6 @@
                 output.classList.add('output');
                 output.textContent = 'Hello, user!';
             } else if (command === 'clear') {
-                output.classList.add('output');
-                output.textContent = 'clearing';
-                 output.textContent = 'clearing';
-                 output.textContent = 'clearing task 1/100';
-                output.textContent = 'clearing task 50/100';
-                output.textContent = 'clearing task 80/100';
-                 output.textContent = 'clearing task 99/100';
-                  output.textContent = 'clearing task 100/100';
-                output.textContent = 'clearing';
                 clearTerminal();
                 return;
             } else if (command === 'date') {
@@ -111,7 +110,7 @@
             terminal.appendChild(commandLine);
             terminal.appendChild(output);
 
-            // Add new input line
+            // Add new input line at the bottom
             const newCommandLine = document.createElement('div');
             newCommandLine.classList.add('command-line');
             newCommandLine.innerHTML = `<span>$</span>`;
@@ -128,6 +127,42 @@
         }
 
         function clearTerminal() {
+            // Simulate loading and file deletion
+            const loadingMessage = document.createElement('div');
+            loadingMessage.classList.add('loading');
+            loadingMessage.textContent = 'Clearing files... Please wait.';
+            terminal.appendChild(loadingMessage);
+
+            // Add fake file deletion logs
+            setTimeout(() => {
+                const deletionMessage1 = document.createElement('div');
+                deletionMessage1.classList.add('file-deletion');
+                deletionMessage1.textContent = 'Deleting file1.txt...';
+                terminal.appendChild(deletionMessage1);
+
+                setTimeout(() => {
+                    const deletionMessage2 = document.createElement('div');
+                    deletionMessage2.classList.add('file-deletion');
+                    deletionMessage2.textContent = 'Deleting file2.txt...';
+                    terminal.appendChild(deletionMessage2);
+
+                    setTimeout(() => {
+                        const finalMessage = document.createElement('div');
+                        finalMessage.classList.add('file-deletion');
+                        finalMessage.textContent = 'Files cleared!';
+                        terminal.appendChild(finalMessage);
+
+                        // Actually clear the terminal
+                        clearContent();
+                    }, 1500);
+                }, 1500);
+            }, 1500);
+
+            scrollToBottom();
+        }
+
+        function clearContent() {
+            // Clear the terminal content after "deleting files"
             terminal.innerHTML = '';
             const initialCommandLine = document.createElement('div');
             initialCommandLine.classList.add('command-line');
