@@ -52,7 +52,6 @@
                 border-color: transparent;
             }
         }
-
     </style>
 </head>
 <body>
@@ -89,6 +88,15 @@
                 output.classList.add('output');
                 output.textContent = 'Hello, user!';
             } else if (command === 'clear') {
+                output.classList.add('output');
+                output.textContent = 'clearing';
+                 output.textContent = 'clearing';
+                 output.textContent = 'clearing task 1/100';
+                output.textContent = 'clearing task 50/100';
+                output.textContent = 'clearing task 80/100';
+                 output.textContent = 'clearing task 99/100';
+                  output.textContent = 'clearing task 100/100';
+                output.textContent = 'clearing';
                 clearTerminal();
                 return;
             } else if (command === 'date') {
@@ -113,7 +121,7 @@
             newCommandLine.appendChild(newInput);
             terminal.appendChild(newCommandLine);
 
-            // Focus the new input field
+            // Focus the new input field immediately
             newInput.focus();
 
             scrollToBottom();
