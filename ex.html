@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            padding: 0;
+        }
+
+        .terminal {
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .command-line {
+            display: flex;
+        }
+
+        .command-line span {
+            color: #33ff00;
+        }
+
+        input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            width: 100%;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .output {
+            color: #66cc66;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal" id="terminal">
+        <div class="command-line">
+            <span>$</span>
+            <input type="text" id="commandInput" autofocus />
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const commandInput = document.getElementById('commandInput');
+
+        commandInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                handleCommand(commandInput.value);
+                commandInput.value = '';  // Clear input field
+            }
+        });
+
+        function handleCommand(command) {
+            const output = document.createElement('div');
+            const commandLine = document.createElement('div');
+            commandLine.classList.add('command-line');
+            commandLine.innerHTML = `<span>$</span> ${command}`;
+
+            output.classList.add('output');
+            output.textContent = `You entered: ${command}`;
+
+            terminal.appendChild(commandLine);
+            terminal.appendChild(output);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>
