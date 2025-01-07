@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal Simulator</title>
+    <title>Josh Ryan's Folio</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
     <style>
         body {
@@ -60,6 +60,43 @@
         .file-deletion {
             color: #ff3333;
         }
+
+        h1, p {
+            color: white;
+            text-align: center;
+        }
+
+        .projects {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .project {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 10px;
+            width: 45%;
+        }
+
+        .project a {
+            color: #33ff00;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .project a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #222;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
@@ -75,8 +112,11 @@
         const terminal = document.getElementById('terminal');
         const commandInput = document.getElementById('commandInput');
 
-        // Add a blinking cursor to the input field
         commandInput.classList.add('blink-cursor');
+
+        // Initial welcome message
+        displayMessage("Welcome to Josh Ryan's Folio!");
+        displayMessage("Type 'help' for a list of commands.");
 
         commandInput.addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
@@ -94,23 +134,27 @@
             // Command Handling
             if (command === 'hello') {
                 output.classList.add('output');
-                output.textContent = 'Hello, user!';
+                output.textContent = 'Hello, welcome to Josh Ryan\'s folio!';
             } else if (command === 'clear') {
                 clearTerminal();
+                return;
+            } else if (command === 'projects') {
+                showProjects();
                 return;
             } else if (command === 'date') {
                 output.classList.add('output');
                 output.textContent = `Current date and time: ${new Date().toLocaleString()}`;
+            } else if (command === 'help') {
+                showHelp();
+                return;
             } else {
                 output.classList.add('output');
                 output.textContent = `Command not recognized: ${command}`;
             }
 
-            // Append the command and output
             terminal.appendChild(commandLine);
             terminal.appendChild(output);
 
-            // Add new input line at the bottom
             const newCommandLine = document.createElement('div');
             newCommandLine.classList.add('command-line');
             newCommandLine.innerHTML = `<span>$</span>`;
@@ -120,20 +164,33 @@
             newCommandLine.appendChild(newInput);
             terminal.appendChild(newCommandLine);
 
-            // Focus the new input field immediately
             newInput.focus();
+            scrollToBottom();
+        }
 
+        function showHelp() {
+            displayMessage("Commands available:");
+            displayMessage("1. 'hello' - Greets you with a welcome message.");
+            displayMessage("2. 'clear' - Simulates clearing files and clears the terminal.");
+            displayMessage("3. 'projects' - Displays links to Josh Ryan's fun projects.");
+            displayMessage("4. 'date' - Shows the current date and time.");
+            displayMessage("5. 'help' - Displays this help message.");
+        }
+
+        function displayMessage(message) {
+            const output = document.createElement('div');
+            output.classList.add('output');
+            output.textContent = message;
+            terminal.appendChild(output);
             scrollToBottom();
         }
 
         function clearTerminal() {
-            // Simulate loading and file deletion
             const loadingMessage = document.createElement('div');
             loadingMessage.classList.add('loading');
             loadingMessage.textContent = 'Clearing files... Please wait.';
             terminal.appendChild(loadingMessage);
 
-            // Add fake file deletion logs
             setTimeout(() => {
                 const deletionMessage1 = document.createElement('div');
                 deletionMessage1.classList.add('file-deletion');
@@ -152,7 +209,6 @@
                         finalMessage.textContent = 'Files cleared!';
                         terminal.appendChild(finalMessage);
 
-                        // Actually clear the terminal
                         clearContent();
                     }, 1500);
                 }, 1500);
@@ -162,7 +218,6 @@
         }
 
         function clearContent() {
-            // Clear the terminal content after "deleting files"
             terminal.innerHTML = '';
             const initialCommandLine = document.createElement('div');
             initialCommandLine.classList.add('command-line');
@@ -177,10 +232,38 @@
             scrollToBottom();
         }
 
+        function showProjects() {
+            const projectSection = document.createElement('div');
+            projectSection.classList.add('projects');
+
+            const projectsList = [
+                { name: 'SaveThePotatoes.org', url: 'https://www.savethepotatoes.org' },
+                { name: 'ILoveTacoBell.Love', url: 'https://www.ilovetacobell.love' },
+                { name: 'Matsuk13.us (Mocked School Site)', url: 'https://www.matsuk13.us' }
+            ];
+
+            projectsList.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.classList.add('project');
+                projectCard.innerHTML = `
+                    <h2>${project.name}</h2>
+                    <p><a href="${project.url}" target="_blank">Check it out</a></p>
+                `;
+                projectSection.appendChild(projectCard);
+            });
+
+            terminal.appendChild(projectSection);
+            scrollToBottom();
+        }
+
         function scrollToBottom() {
             terminal.scrollTop = terminal.scrollHeight;
         }
     </script>
+
+    <footer>
+        <p>© 2025 Josh Ryan - Making Silly Websites</p>
+    </footer>
 
 </body>
 </html>
