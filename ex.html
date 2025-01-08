@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Josh Ryan's website</title>
+    <title>Josh Ryan's Folio</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
     <style>
         body {
@@ -109,13 +109,18 @@
     </div>
 
     <script>
+        // Device detection
+        if (window.innerWidth <= 1024) {  // Detect mobile/tablet
+            window.location.href = 'https://JoshRyan.fyi/phone';
+        }
+
         const terminal = document.getElementById('terminal');
         const commandInput = document.getElementById('commandInput');
 
         commandInput.classList.add('blink-cursor');
 
         // Initial welcome message
-        displayMessage("Welcome to Josh Ryan's website!");
+        displayMessage("Welcome to Josh Ryan's Folio!");
         displayMessage("Type 'help' for a list of commands.");
 
         commandInput.addEventListener('keydown', function (event) {
@@ -150,6 +155,9 @@
             } else {
                 output.classList.add('output');
                 output.textContent = `Command not recognized: ${command}`;
+              } else if (command === 'Potato') {
+                output.classList.add('output');
+                output.textContent = `Current date and time: ${new Date().toLocaleString()}`;
             }
 
             terminal.appendChild(commandLine);
@@ -171,8 +179,8 @@
         function showHelp() {
             displayMessage("Commands available:");
             displayMessage("1. 'hello' - Greets you with a welcome message.");
-            displayMessage("2. 'clear' - clears files and clears the terminal. (don't worry this won't actually clear your file on your computer) ");
-            displayMessage("3. 'projects' - Displays links to Josh Ryan's stupid projects.");
+            displayMessage("2. 'clear' - Simulates clearing files and clears the terminal.");
+            displayMessage("3. 'projects' - Displays links to Josh Ryan's fun projects.");
             displayMessage("4. 'date' - Shows the current date and time.");
             displayMessage("5. 'help' - Displays this help message.");
         }
