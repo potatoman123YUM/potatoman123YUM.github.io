@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Potato - Rejection Mechanism</title>
+    <title>Hot Potato - Match Feature</title>
     <style>
         * {
             margin: 0;
@@ -94,56 +94,48 @@
             color: white;
         }
 
-        .chat-interface {
+        .popup {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: white;
-            flex-direction: column;
-        }
-
-        .chat-header {
-            background: #FF6B6B;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
 
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            background: #f5f5f5;
-            display: flex;
-            flex-direction: column;
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
         }
 
-        .chat-input {
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid #ddd;
+        .popup-content h3 {
+            margin-bottom: 20px;
         }
 
-        .chat-input input {
-            flex: 1;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .chat-input button {
+        .popup-content button {
             padding: 10px 15px;
-            background: #FF6B6B;
-            color: white;
             border: none;
             border-radius: 5px;
+            margin: 5px;
             cursor: pointer;
+        }
+
+        .start-chat {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .decline-chat {
+            background: #ff4d4d;
+            color: white;
         }
     </style>
 </head>
@@ -151,6 +143,7 @@
     <div class="app-container">
         <div class="app-header">
             <h1>🥔 Hot Potato</h1>
+            <p>Find your perfect spud match!</p>
         </div>
         <div class="card-container" id="cardContainer"></div>
         <div class="action-buttons">
@@ -159,7 +152,15 @@
         </div>
     </div>
 
-    <div class="chat-interface" id="chatInterface">
+    <div class="popup" id="matchPopup">
+        <div class="popup-content">
+            <h3>You matched with <span id="matchedPotatoName"></span>! 🥳</h3>
+            <button class="start-chat" onclick="startChat()">Start Chat</button>
+            <button class="decline-chat" onclick="declineChat()">Decline</button>
+        </div>
+    </div>
+
+    <div class="chat-interface" id="chatInterface" style="display: none;">
         <div class="chat-header">
             <h3 id="chatPotatoName">Potato Chat</h3>
             <button onclick="closeChat()">Close</button>
@@ -172,55 +173,51 @@
     </div>
 
     <script>
-        const categoryLibraries = {
-            art: ["I love painting! 🎨", "Colors make life vibrant!", "Art is my escape."],
-            music: ["Music heals the soul 🎵", "I love playing guitar!", "What's your favorite genre?"],
-            food: ["Food is my language! 🍕", "Do you like cooking?", "Let's explore food markets!"]
-        };
+        const names = [
+            "Alex", "Jamie", "Taylor", "Jordan", "Morgan", "Casey", "Dakota", "Riley", "Avery", "Quinn", // Gender-neutral
+            "Chris", "Pat", "Dana", "Skyler", "Charlie", "Parker", "Elliot", "Rowan", "Reese", "Blake"
+        ];
 
-        const rejectionMessages = [
-            "Sorry, I just don't think we're a match. 😔",
-            "It's not you, it's me. Goodbye!",
-            "I think this conversation has reached its end. Farewell!",
-            "Thanks for chatting, but I have to go. Bye!"
+        const descriptions = [
+            "I love hiking and exploring nature trails.",
+            "Cooking is my therapy. Let's share a meal!",
+            "Music is my life – what's on your playlist?",
+            "Avid reader and aspiring novelist. 📚",
+            "Big fan of traveling and seeing new places.",
+            "Passionate about art and painting. 🎨",
+            "Foodie at heart – I love trying new cuisines.",
+            "Fitness enthusiast – let's hit the gym together!",
+            "Animal lover with a soft spot for rescue pets. 🐾",
+            "Tech geek who loves coding and gaming. 💻"
         ];
 
         const potatoes = [];
-        const categories = Object.keys(categoryLibraries);
-
-        // Generate profiles dynamically
         for (let i = 0; i < 100; i++) {
-            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-            const randomMessages = categoryLibraries[randomCategory];
+            const name = names[Math.floor(Math.random() * names.length)];
+            const description = descriptions[Math.floor(Math.random() * descriptions.length)];
             potatoes.push({
-                name: `Potato ${i + 1}`,
-                category: randomCategory,
-                messages: randomMessages,
-                bio: `I love ${randomCategory}!`,
-                rejectionLimit: Math.floor(Math.random() * 7) + 4 // Between 4 and 10
+                name,
+                bio: description,
+                flag: "🥔",
             });
         }
 
         let currentIndex = 0;
-        let currentPotato = null;
-        let messageCount = 0;
 
         function showNextPotato() {
-            const container = document.getElementById('cardContainer');
-            container.innerHTML = '';
-
+            const container = document.getElementById("cardContainer");
+            container.innerHTML = "";
             if (currentIndex >= potatoes.length) currentIndex = 0;
-            currentPotato = potatoes[currentIndex];
 
-            const card = document.createElement('div');
-            card.className = 'card';
+            const potato = potatoes[currentIndex];
+            const card = document.createElement("div");
+            card.className = "card";
             card.innerHTML = `
                 <div class="potato-image">
-                    <span class="potato-emoji">🥔</span>
+                    <span class="potato-emoji">${potato.flag}</span>
                 </div>
-                <h2>${currentPotato.name}</h2>
-                <p>${currentPotato.bio}</p>
-                <p><strong>Category:</strong> ${currentPotato.category}</p>
+                <h2>${potato.name}</h2>
+                <p>${potato.bio}</p>
             `;
             container.appendChild(card);
         }
@@ -231,49 +228,36 @@
         }
 
         function swipeRight() {
-            document.getElementById('chatInterface').style.display = 'flex';
-            document.getElementById('chatPotatoName').textContent = currentPotato.name;
-            document.getElementById('chatMessages').innerHTML = '';
-            messageCount = 0;
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            if (!message) return;
-
-            addMessage(message, 'user');
-            input.value = '';
-            messageCount++;
-
-            if (messageCount >= currentPotato.rejectionLimit) {
-                setTimeout(() => {
-                    const rejectionMessage = rejectionMessages[Math.floor(Math.random() * rejectionMessages.length)];
-                    addMessage(rejectionMessage, 'potato');
-                    setTimeout(closeChat, 2000);
-                }, 1000);
+            const chance = Math.random();
+            if (chance < 0.4) {
+                showMatchPopup();
             } else {
-                const randomReply = currentPotato.messages[Math.floor(Math.random() * currentPotato.messages.length)];
-                setTimeout(() => addMessage(randomReply, 'potato'), 1000);
+                currentIndex++;
+                showNextPotato();
             }
         }
 
-        function addMessage(text, sender) {
-            const chatMessages = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.textContent = text;
-            messageDiv.style.margin = '10px 0';
-            messageDiv.style.padding = '10px';
-            messageDiv.style.borderRadius = '5px';
-            messageDiv.style.backgroundColor = sender === 'user' ? '#FF6B6B' : '#f0f0f0';
-            messageDiv.style.color = sender === 'user' ? 'white' : 'black';
-            messageDiv.style.alignSelf = sender === 'user' ? 'flex-end' : 'flex-start';
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+        function showMatchPopup() {
+            const potato = potatoes[currentIndex];
+            document.getElementById("matchedPotatoName").textContent = potato.name;
+            document.getElementById("matchPopup").style.display = "flex";
+        }
+
+        function startChat() {
+            document.getElementById("matchPopup").style.display = "none";
+            document.getElementById("chatInterface").style.display = "flex";
+            const potato = potatoes[currentIndex];
+            document.getElementById("chatPotatoName").textContent = potato.name;
+        }
+
+        function declineChat() {
+            document.getElementById("matchPopup").style.display = "none";
+            currentIndex++;
+            showNextPotato();
         }
 
         function closeChat() {
-            document.getElementById('chatInterface').style.display = 'none';
+            document.getElementById("chatInterface").style.display = "none";
             currentIndex++;
             showNextPotato();
         }
