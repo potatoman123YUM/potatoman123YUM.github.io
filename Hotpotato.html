@@ -124,6 +124,25 @@
             border-radius: 15px;
             margin-top: 20px;
         }
+        /* Rejection Pop-up */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -152,6 +171,14 @@
         <div class="input-area">
             <input type="text" id="messageInput" placeholder="Type a message...">
             <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Rejection Pop-up -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h3>You just got rejected! 😅</h3>
+            <button onclick="continueGame()">Continue</button>
         </div>
     </div>
 
@@ -194,6 +221,20 @@
             "You made a potato-themed quilt! 🧵🥔",
             "You created a potato plushie! 🧸🥔",
             "You stitched a potato bag! 👜🥔"
+        ];
+
+        const startMessages = [
+            "Hey! Let's see if we can mash things up!",
+            "Ready to roll? Let's chat!",
+            "Is it love at first sight or just the spud talking? 😏",
+            "Hey there, you look like a real catch! 🥔"
+        ];
+
+        const rejectMessages = [
+            "Sorry, I'm just not feeling the vibe 😔",
+            "It's not you, it's me... 🥔",
+            "I think we should just be friends... 🥺",
+            "You're a great potato, but not my type 🥔"
         ];
 
         let currentIndex = 0;
@@ -266,9 +307,10 @@
             document.getElementById('chatPotatoName').textContent = currentPotato.name;
             document.getElementById('chatMessages').innerHTML = '';
             
-            // Send first message after a delay
+            // Send random start message from the list
             setTimeout(() => {
-                addMessage(currentPotato.messages[0], 'potato');
+                const startMessage = startMessages[Math.floor(Math.random() * startMessages.length)];
+                addMessage(startMessage, 'potato');
             }, 1000);
         }
 
@@ -291,18 +333,28 @@
                 messageCount++;
 
                 setTimeout(() => {
-                    if (messageCount >= 3) {
-                        // Send rejection message from a random choice
-                        const randomRejectMessage = currentPotato.messages[Math.floor(Math.random() * currentPotato.messages.length)];
-                        addMessage(randomRejectMessage, 'potato');
-                        setTimeout(closeChat, 3000);
+                    if (messageCount >= 5) {
+                        // Send random reject message
+                        const rejectMessage = rejectMessages[Math.floor(Math.random() * rejectMessages.length)];
+                        addMessage(rejectMessage, 'potato');
+                        showRejectionPopup();
                     } else {
-                        // Send a random response
+                        // Send random response
                         const randomResponseMessage = currentPotato.messages[Math.floor(Math.random() * currentPotato.messages.length)];
                         addMessage(randomResponseMessage, 'potato');
                     }
                 }, 1000);
             }
+        }
+
+        function showRejectionPopup() {
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function continueGame() {
+            document.getElementById('popup').style.display = 'none';
+            currentIndex++;
+            showNextPotato();
         }
 
         function closeChat() {
