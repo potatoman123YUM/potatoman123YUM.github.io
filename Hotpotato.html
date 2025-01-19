@@ -1,71 +1,129 @@
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hot Potato - Find Your Spud Soulmate</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #FFB74D, #FF7043);
-            min-height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .container {
+
+        body {
+            background: linear-gradient(135deg, #FF9A8B, #FF6B6B);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
             max-width: 400px;
             margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
+
         .app-header {
-            text-align: center;
+            background: #FF6B6B;
             color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            padding: 20px;
+            text-align: center;
         }
+
+        .app-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .app-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
         .card-container {
             position: relative;
-            height: 500px;
+            height: 600px;
+            padding: 20px;
         }
+
         .card {
             background: white;
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             position: absolute;
-            width: 100%;
-            height: 100%;
-            box-sizing: border-box;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
             transition: transform 0.5s, opacity 0.5s;
         }
-        .card.swipe-left {
-            transform: translateX(-150%) rotate(-30deg);
-            opacity: 0;
-        }
-        .card.swipe-right {
-            transform: translateX(150%) rotate(30deg);
-            opacity: 0;
-        }
+
         .potato-image {
-            height: 250px;
+            height: 300px;
             background: #f8f9fa;
-            border-radius: 10px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 100px;
+            margin-bottom: 20px;
             position: relative;
+            overflow: hidden;
         }
-        .sewing-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            background: #E91E63;
-            color: white;
+
+        .potato-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .potato-emoji {
+            font-size: 100px;
+        }
+
+        .flag {
+            font-size: 48px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .action-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             border: none;
-            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
             cursor: pointer;
-            display: none;
+            transition: transform 0.2s, background 0.2s;
         }
+
+        .pass-button {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        .like-button {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .action-button:hover {
+            transform: scale(1.1);
+        }
+
         .chat-interface {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -73,173 +131,203 @@
             bottom: 0;
             background: white;
             z-index: 100;
-            padding: 20px;
+            display: none;
             flex-direction: column;
         }
+
+        .chat-header {
+            padding: 15px;
+            background: #FF6B6B;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 10px;
+            padding: 15px;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
         }
+
         .message {
             margin: 10px 0;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 15px;
             max-width: 80%;
         }
+
         .potato-message {
-            background: #F5F5F5;
+            background: white;
             align-self: flex-start;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         .user-message {
-            background: #FFB74D;
+            background: #FF6B6B;
             color: white;
             align-self: flex-end;
             margin-left: auto;
         }
-        .input-area {
-            padding: 10px;
+
+        .chat-input {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
             display: flex;
             gap: 10px;
         }
-        input {
+
+        .chat-input input {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 20px;
+            font-size: 14px;
         }
-        button {
-            padding: 10px 20px;
+
+        .chat-input button {
+            padding: 12px 24px;
             border: none;
             border-radius: 20px;
-            background: #FF7043;
+            background: #FF6B6B;
             color: white;
             cursor: pointer;
+            font-weight: bold;
         }
-        .sewing-result {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-        /* Rejection Pop-up */
-        .popup {
+
+        .rejection-popup {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0,0,0,0.7);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
+
         .popup-content {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 15px;
             text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .popup-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .popup-content button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 20px;
+            background: #FF6B6B;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .swipe-left {
+            transform: translateX(-150%) rotate(-30deg);
+            opacity: 0;
+        }
+
+        .swipe-right {
+            transform: translateX(150%) rotate(30deg);
+            opacity: 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="app-container">
         <div class="app-header">
             <h1>🥔 Hot Potato</h1>
-            <p>Where love gets mashed!</p>
+            <p>Find your perfect spud match!</p>
         </div>
         
         <div class="card-container" id="cardContainer"></div>
         
-        <div style="text-align: center; margin-top: 20px;">
-            <button onclick="swipeLeft()">Pass ❌</button>
-            <button onclick="swipeRight()">Like ❤️</button>
+        <div class="action-buttons">
+            <button class="action-button pass-button" onclick="swipeLeft()">❌</button>
+            <button class="action-button like-button" onclick="swipeRight()">❤️</button>
         </div>
-
-        <div class="sewing-result" id="sewingResult"></div>
     </div>
 
     <div class="chat-interface" id="chatInterface">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+        <div class="chat-header">
             <h3 id="chatPotatoName"></h3>
             <button onclick="closeChat()">Close</button>
         </div>
         <div class="chat-messages" id="chatMessages"></div>
-        <div class="input-area">
+        <div class="chat-input">
             <input type="text" id="messageInput" placeholder="Type a message...">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
 
-    <!-- Rejection Pop-up -->
-    <div class="popup" id="popup">
+    <div class="rejection-popup" id="rejectionPopup">
         <div class="popup-content">
-            <h3>You just got rejected! 😅</h3>
-            <button onclick="continueGame()">Continue</button>
+            <h3>They're just not that into spuds... 😢</h3>
+            <button onclick="continueGame()">Keep Looking</button>
         </div>
     </div>
 
     <script>
+        // Potato profiles array
         const potatoes = [
             {
-                name: "Russet Richard",
-                bio: "Earthy guy with a heart of gold. Love getting baked 😉",
-                personality: "dad-jokes",
+                name: "Alex",
+                bio: "Non-binary potato living my best life! Love art and music festivals ✨",
+                flag: "🏳️‍⚧️",
+                identity: "Non-binary",
                 messages: [
-                    "Hey there! You look a-peeling! 😄",
-                    "You know, I think we'd make a great mash 🥔",
-                    "Listen... I need to be honest. I'm more of a couch potato 😅"
+                    "Hi! Your vibe is amazing!",
+                    "What's your favorite music festival?",
+                    "Art is my passion - do you create too?",
+                    "Looking for someone to share adventures with!",
+                    "Life is too short for bland seasonings 🌶️",
+                    "Let's make some memories together!",
+                    "You seem like someone who gets me",
+                    "What's your spirit vegetable? 😄",
+                    "I love expressing myself through different recipes",
+                    "Being authentic is my top priority"
                 ]
             },
             {
-                name: "Sweet Potato Sarah",
-                bio: "Sweet but spicy. Looking for someone to share recipes with!",
-                personality: "foodie",
+                name: "Jamie",
+                bio: "Trans and proud! 🎨 Artist and foodie looking for genuine connections",
+                flag: "🏳️‍⚧️",
+                identity: "Trans",
                 messages: [
-                    "Hi! You've got great taste in potatoes 😊",
-                    "I love how you express yourself! Very refreshing 🌟",
-                    "I should mention... I'm focusing on my cooking career right now 👩‍🍳"
-                ]
-            },
-            {
-                name: "Yukon Gold Yuki",
-                bio: "Premium potato seeking premium connection ✨",
-                personality: "luxurious",
-                messages: [
-                    "Darling, you have a certain je ne sais quoi ✨",
-                    "Your energy is absolutely golden 🌟",
-                    "However... I don't think we're in the same produce aisle, if you know what I mean 🛍️"
+                    "Hey! Love your energy!",
+                    "What makes you smile?",
+                    "Art helps me express my true self",
+                    "Food is my love language",
+                    "Let's create something beautiful together",
+                    "Your authenticity shines through",
+                    "What inspires you?",
+                    "Looking for meaningful connections",
+                    "Life is about being true to yourself",
+                    "Tell me about your passions"
                 ]
             }
-        ];
-
-        const sewingResults = [
-            "You sewed a tiny potato costume! 🥔👕",
-            "You made a potato-themed quilt! 🧵🥔",
-            "You created a potato plushie! 🧸🥔",
-            "You stitched a potato bag! 👜🥔"
-        ];
-
-        const startMessages = [
-            "Hey! Let's see if we can mash things up!",
-            "Ready to roll? Let's chat!",
-            "Is it love at first sight or just the spud talking? 😏",
-            "Hey there, you look like a real catch! 🥔"
-        ];
-
-        const rejectMessages = [
-            "Sorry, I'm just not feeling the vibe 😔",
-            "It's not you, it's me... 🥔",
-            "I think we should just be friends... 🥺",
-            "You're a great potato, but not my type 🥔"
+            // Additional potatoes can be added here
         ];
 
         let currentIndex = 0;
         let messageCount = 0;
         let currentPotato = null;
+        const REJECTION_MESSAGE_COUNT = 10;
 
         function showNextPotato() {
             const container = document.getElementById('cardContainer');
@@ -250,32 +338,18 @@
             const card = document.createElement('div');
             card.className = 'card';
             
-            const sewingChance = Math.random() < 0.3; // 30% chance for sewing button
-            
             card.innerHTML = `
                 <div class="potato-image">
-                    🥔
-                    ${sewingChance ? '<button class="sewing-button" onclick="sew()">Sew</button>' : ''}
+                    <div class="potato-display">
+                        <span class="potato-emoji">🥔</span>
+                        <span class="flag">${potatoes[currentIndex].flag}</span>
+                    </div>
                 </div>
                 <h2>${potatoes[currentIndex].name}</h2>
                 <p>${potatoes[currentIndex].bio}</p>
             `;
             
             container.appendChild(card);
-            
-            if (sewingChance) {
-                card.querySelector('.sewing-button').style.display = 'block';
-            }
-        }
-
-        function sew() {
-            const result = sewingResults[Math.floor(Math.random() * sewingResults.length)];
-            const resultDiv = document.getElementById('sewingResult');
-            resultDiv.style.display = 'block';
-            resultDiv.textContent = result;
-            setTimeout(() => {
-                resultDiv.style.display = 'none';
-            }, 3000);
         }
 
         function swipeLeft() {
@@ -291,7 +365,7 @@
             const card = document.querySelector('.card');
             card.classList.add('swipe-right');
             setTimeout(() => {
-                if (Math.random() < 0.3) { // 30% match chance
+                if (Math.random() < 0.3) {
                     startChat();
                 } else {
                     currentIndex++;
@@ -307,10 +381,8 @@
             document.getElementById('chatPotatoName').textContent = currentPotato.name;
             document.getElementById('chatMessages').innerHTML = '';
             
-            // Send random start message from the list
             setTimeout(() => {
-                const startMessage = startMessages[Math.floor(Math.random() * startMessages.length)];
-                addMessage(startMessage, 'potato');
+                addMessage("Hey! Thanks for the match! 😊", 'potato');
             }, 1000);
         }
 
@@ -333,28 +405,17 @@
                 messageCount++;
 
                 setTimeout(() => {
-                    if (messageCount >= 5) {
-                        // Send random reject message
-                        const rejectMessage = rejectMessages[Math.floor(Math.random() * rejectMessages.length)];
-                        addMessage(rejectMessage, 'potato');
-                        showRejectionPopup();
+                    if (messageCount >= REJECTION_MESSAGE_COUNT) {
+                        addMessage("Sorry, I don't think this is working out... 😔", 'potato');
+                        setTimeout(() => {
+                            document.getElementById('rejectionPopup').style.display = 'flex';
+                        }, 1000);
                     } else {
-                        // Send random response
-                        const randomResponseMessage = currentPotato.messages[Math.floor(Math.random() * currentPotato.messages.length)];
-                        addMessage(randomResponseMessage, 'potato');
+                        const randomMessage = currentPotato.messages[Math.floor(Math.random() * currentPotato.messages.length)];
+                        addMessage(randomMessage, 'potato');
                     }
                 }, 1000);
             }
-        }
-
-        function showRejectionPopup() {
-            document.getElementById('popup').style.display = 'flex';
-        }
-
-        function continueGame() {
-            document.getElementById('popup').style.display = 'none';
-            currentIndex++;
-            showNextPotato();
         }
 
         function closeChat() {
@@ -363,14 +424,24 @@
             showNextPotato();
         }
 
-        // Start the app
-        showNextPotato();
+        function continueGame() {
+            document.getElementById('rejectionPopup').style.display = 'none';
+            document.getElementById('chatInterface').style.display = 'none';
+            currentIndex++;
+            showNextPotato();
+        }
 
-        // Add keyboard controls
+        // Keyboard controls
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') swipeLeft();
             if (e.key === 'ArrowRight') swipeRight();
+            if (e.key === 'Enter' && document.getElementById('messageInput') === document.activeElement) {
+                sendMessage();
+            }
         });
+
+        // Start the app
+        showNextPotato();
     </script>
 </body>
 </html>
