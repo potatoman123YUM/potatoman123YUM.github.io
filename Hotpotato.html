@@ -129,15 +129,15 @@
 <body>
     <div class="container">
         <div class="app-header">
-            <h1>spudr</h1>
-            <p>potato!</p>
+            <h1>🥔 Hot Potato</h1>
+            <p>Where love gets mashed!</p>
         </div>
         
         <div class="card-container" id="cardContainer"></div>
         
         <div style="text-align: center; margin-top: 20px;">
             <button onclick="swipeLeft()">Pass ❌</button>
-            <button onclick="swipeRight()">Love ❤️</button>
+            <button onclick="swipeRight()">Like ❤️</button>
         </div>
 
         <div class="sewing-result" id="sewingResult"></div>
@@ -164,7 +164,7 @@
                 messages: [
                     "Hey there! You look a-peeling! 😄",
                     "You know, I think we'd make a great mash 🥔",
-                    "Listen... I need to be honest. I'm more of a couch potato 😅sorry."
+                    "Listen... I need to be honest. I'm more of a couch potato 😅"
                 ]
             },
             {
@@ -174,20 +174,16 @@
                 messages: [
                     "Hi! You've got great taste in potatoes 😊",
                     "I love how you express yourself! Very refreshing 🌟",
-                   "You’ve got me peeling with laughter! I’m definitely rooting for you!",
-                  "You know, I think we'd make a great mash 🥔",
-                    "I should mention... I'm focusing on my cooking career right now so byeeee👩‍🍳"
+                    "I should mention... I'm focusing on my cooking career right now 👩‍🍳"
                 ]
             },
             {
                 name: "Yukon Gold Yuki",
-                bio: "Premium potato seeking premium connection🥰",
+                bio: "Premium potato seeking premium connection ✨",
                 personality: "luxurious",
                 messages: [
                     "Darling, you have a certain je ne sais quoi ✨",
                     "Your energy is absolutely golden 🌟",
-                    "Wow, you're pretty a-peel-ing 😘",
-                  "Well, aren’t you a sweet potato? If I were any more charmed, I’d spud myself!",
                     "However... I don't think we're in the same produce aisle, if you know what I mean 🛍️"
                 ]
             }
@@ -254,7 +250,7 @@
             const card = document.querySelector('.card');
             card.classList.add('swipe-right');
             setTimeout(() => {
-                if (Math.random() < 0.2) { // 20% match chance
+                if (Math.random() < 0.3) { // 30% match chance
                     startChat();
                 } else {
                     currentIndex++;
@@ -293,15 +289,17 @@
                 addMessage(message, 'user');
                 input.value = '';
                 messageCount++;
-                
+
                 setTimeout(() => {
                     if (messageCount >= 3) {
-                        // Send rejection message
-                        addMessage(currentPotato.messages[2], 'potato');
+                        // Send rejection message from a random choice
+                        const randomRejectMessage = currentPotato.messages[Math.floor(Math.random() * currentPotato.messages.length)];
+                        addMessage(randomRejectMessage, 'potato');
                         setTimeout(closeChat, 3000);
                     } else {
-                        // Send regular response
-                        addMessage(currentPotato.messages[1], 'potato');
+                        // Send a random response
+                        const randomResponseMessage = currentPotato.messages[Math.floor(Math.random() * currentPotato.messages.length)];
+                        addMessage(randomResponseMessage, 'potato');
                     }
                 }, 1000);
             }
