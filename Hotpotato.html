@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Potato/title>
+    <title>Hot Potato - Match Feature</title>
     <style>
         * {
             margin: 0;
@@ -14,33 +14,13 @@
 
         body {
             background: linear-gradient(135deg, #FF9A8B, #FF6B6B);
-            position: relative;
             min-height: 100vh;
             padding: 20px;
-        }
-
-        body::before {
-            content: '❤️';
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 150px;
-            color: rgba(255, 255, 255, 0.1);
-            z-index: -1;
-            animation: float 5s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-30px);
-            }
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            overflow: hidden;
         }
 
         .app-container {
@@ -50,6 +30,7 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .app-header {
@@ -57,12 +38,11 @@
             color: white;
             padding: 20px;
             text-align: center;
-            border-bottom: 3px solid #FF4D4D;
         }
 
         .card-container {
             position: relative;
-            height: 600px;
+            height: 400px;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -75,24 +55,14 @@
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             position: absolute;
-            width: calc(100% - 40px);
-            height: calc(100% - 40px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .card.active {
-            opacity: 1;
-            transform: scale(1);
+            width: 100%;
+            max-width: 350px;
+            height: 100%;
+            transition: transform 0.3s ease;
         }
 
         .potato-image {
-            height: 300px;
+            height: 200px;
             background: #f8f9fa;
             border-radius: 15px;
             display: flex;
@@ -103,14 +73,6 @@
 
         .potato-emoji {
             font-size: 100px;
-        }
-
-        .bio-text {
-            font-size: 14px;
-            color: #555;
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 0 10px;
         }
 
         .action-buttons {
@@ -131,7 +93,6 @@
             justify-content: center;
             font-size: 24px;
             cursor: pointer;
-            transition: background 0.3s ease;
         }
 
         .pass-button {
@@ -139,17 +100,9 @@
             color: white;
         }
 
-        .pass-button:hover {
-            background: #e60000;
-        }
-
         .like-button {
             background: #4CAF50;
             color: white;
-        }
-
-        .like-button:hover {
-            background: #45a049;
         }
 
         .popup {
@@ -184,7 +137,6 @@
             border-radius: 5px;
             margin: 5px;
             cursor: pointer;
-            transition: background 0.3s ease;
         }
 
         .start-chat {
@@ -192,227 +144,131 @@
             color: white;
         }
 
-        .start-chat:hover {
-            background: #45a049;
-        }
-
         .decline-chat {
             background: #ff4d4d;
             color: white;
         }
 
-        .decline-chat:hover {
-            background: #e60000;
-        }
-
-        .undo-button {
-            background: #FF9A8B;
-            color: white;
-            font-size: 16px;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            display: none;
-        }
-
-        .undo-button:hover {
-            background: #FF6B6B;
-        }
-
         .chat-interface {
             display: none;
-            max-width: 400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
+            background: #f0f0f0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            z-index: 1000;
         }
 
         .chat-header {
+            background: #FF6B6B;
+            padding: 10px;
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .chat-messages {
-            margin-top: 20px;
-            height: 300px;
-            overflow-y: auto;
-            border-bottom: 2px solid #FF9A8B;
-            padding-bottom: 10px;
+            padding: 20px;
+            height: calc(100% - 120px);
+            overflow-y: scroll;
         }
 
         .chat-input {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
         }
 
         .chat-input input {
-            width: 100%;
+            flex: 1;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 20px;
             border: 1px solid #ddd;
         }
 
         .chat-input button {
+            padding: 10px 15px;
             background: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
-            padding: 10px;
+            border-radius: 20px;
             cursor: pointer;
+            margin-left: 10px;
         }
 
-        .chat-input button:hover {
-            background: #45a049;
+        @media screen and (max-width: 600px) {
+            .card-container {
+                height: 300px;
+            }
         }
 
-        /* Onboarding styles */
-        .onboarding {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-        }
-
-        .onboarding .content {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            width: 300px;
-            text-align: center;
-        }
-
-        .onboarding input {
-            padding: 10px;
-            margin-top: 10px;
-            width: 100%;
-            border-radius: 5px;
-        }
-
-        .onboarding button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            background: #FF6B6B;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .onboarding button:hover {
-            background: #e60000;
-        }
     </style>
 </head>
 <body>
-    <div class="onboarding" id="onboardingContainer">
-        <div class="content">
-            <h2>Welcome to Hot Potato! 🥔</h2>
-            <p>Please tell us your name:</p>
-            <input type="text" id="nameInput" placeholder="Enter your name" />
-            <button onclick="finishOnboarding()">Start Chatting</button>
+    <div class="app-container">
+        <div class="app-header">
+            <h1>🥔 Hot Potato</h1>
+            <p>Find your perfect spud match!</p>
+        </div>
+        <div class="card-container" id="cardContainer"></div>
+        <div class="action-buttons">
+            <button class="action-button pass-button" onclick="swipeLeft()">❌</button>
+            <button class="action-button like-button" onclick="swipeRight()">❤️</button>
         </div>
     </div>
 
-    <div class="app-container">
-        <div class="app-header">
-            <h1>Hot Potato</h1>
+    <div class="popup" id="matchPopup">
+        <div class="popup-content">
+            <h3>You matched with <span id="matchedPotatoName"></span>! 🥳</h3>
+            <button class="start-chat" onclick="startChat()">Start Chat</button>
+            <button class="decline-chat" onclick="declineChat()">Decline</button>
         </div>
+    </div>
 
-        <div class="card-container" id="cardContainer">
-            <!-- Potato cards will appear here -->
+    <div class="chat-interface" id="chatInterface">
+        <div class="chat-header">
+            <h3 id="chatPotatoName">Potato Chat</h3>
+            <button onclick="closeChat()">Close</button>
         </div>
-
-        <div class="action-buttons">
-            <button class="action-button pass-button" onclick="swipeLeft()">👎</button>
-            <button class="action-button like-button" onclick="swipeRight()">👍</button>
-        </div>
-
-        <div class="popup" id="matchPopup">
-            <div class="popup-content">
-                <h3>It's a match!</h3>
-                <p id="matchedPotatoName"></p>
-                <button class="start-chat" onclick="startChat()">Start Chat</button>
-                <button class="decline-chat" onclick="declineChat()">Pass</button>
-                <button class="undo-button" id="undoButton" onclick="undoDecline()">Undo Decline</button>
-            </div>
-        </div>
-
-        <div class="chat-interface" id="chatInterface">
-            <div class="chat-header">
-                <h3 id="chatPotatoName">Potato</h3>
-                <button onclick="closeChat()">X</button>
-            </div>
-            <div class="chat-messages" id="chatMessages"></div>
-            <div class="chat-input">
-                <input type="text" id="messageInput" placeholder="Say something..." />
-                <button onclick="sendMessage()">Send</button>
-            </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input id="messageInput" placeholder="Type a message..." onkeydown="checkEnter(event)">
+            <button onclick="sendMessage()">Send</button>
         </div>
     </div>
 
     <script>
-        // Helper to get/set cookies
-        function getCookie(name) {
-            const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-            return match ? match[2] : null;
-        }
+        const names = ["Alex", "Jamie", "Taylor", "Jordan", "Morgan", "Casey", "Dakota", "Riley", "Avery", "Quinn"];
+        const descriptions = ["I love hiking", "Cooking is my therapy", "Music is my life", "Avid reader", "Big fan of traveling"];
+        const potatoes = [];
 
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            document.cookie = name + '=' + value + '; expires=' + date.toUTCString() + '; path=/';
-        }
-
-        // Check if onboarding has been completed
-        if (!getCookie('onboardingCompleted')) {
-            document.getElementById('onboardingContainer').style.display = 'flex';
+        for (let i = 0; i < 100; i++) {
+            const name = names[Math.floor(Math.random() * names.length)];
+            const description = descriptions[Math.floor(Math.random() * descriptions.length)];
+            potatoes.push({name, bio: description, flag: "🥔"});
         }
 
         let currentIndex = 0;
-        let userName = '';
-
-        function finishOnboarding() {
-            userName = document.getElementById('nameInput').value.trim();
-            if (userName) {
-                setCookie('onboardingCompleted', 'true', 365);
-                document.getElementById('onboardingContainer').style.display = 'none';
-                showNextPotato();
-            }
-        }
 
         function showNextPotato() {
             const container = document.getElementById("cardContainer");
             container.innerHTML = "";
-            const potato = {
-                name: "Potato " + (currentIndex + 1),
-                bio: "This is your friend " + (userName ? userName : "Potato Lover") + "!",
-                flag: "🥔"
-            };
-
+            if (currentIndex >= potatoes.length) currentIndex = 0;
+            const potato = potatoes[currentIndex];
             const card = document.createElement("div");
-            card.className = "card active";
+            card.className = "card";
             card.innerHTML = `
                 <div class="potato-image">
                     <span class="potato-emoji">${potato.flag}</span>
                 </div>
                 <h2>${potato.name}</h2>
-                <p class="bio-text">${potato.bio}</p>
+                <p>${potato.bio}</p>
             `;
             container.appendChild(card);
         }
@@ -433,11 +289,7 @@
         }
 
         function showMatchPopup() {
-            const potato = {
-                name: "Potato " + (currentIndex + 1),
-                bio: "This is your friend " + (userName ? userName : "Potato Lover") + "!",
-                flag: "🥔"
-            };
+            const potato = potatoes[currentIndex];
             document.getElementById("matchedPotatoName").textContent = potato.name;
             document.getElementById("matchPopup").style.display = "flex";
         }
@@ -445,23 +297,13 @@
         function startChat() {
             document.getElementById("matchPopup").style.display = "none";
             document.getElementById("chatInterface").style.display = "flex";
-            const potato = {
-                name: "Potato " + (currentIndex + 1),
-                bio: "This is your friend " + (userName ? userName : "Potato Lover") + "!",
-                flag: "🥔"
-            };
+            const potato = potatoes[currentIndex];
             document.getElementById("chatPotatoName").textContent = potato.name;
         }
 
         function declineChat() {
             document.getElementById("matchPopup").style.display = "none";
             currentIndex++;
-            showNextPotato();
-        }
-
-        function undoDecline() {
-            document.getElementById("undoButton").style.display = "none";
-            document.getElementById("matchPopup").style.display = "none";
             showNextPotato();
         }
 
@@ -472,18 +314,23 @@
         }
 
         function sendMessage() {
-            const input = document.getElementById("messageInput");
-            const message = input.value.trim();
-            if (message !== "") {
-                const chatMessages = document.getElementById("chatMessages");
-                const newMessage = document.createElement("div");
-                newMessage.className = "chat-message";
-                newMessage.textContent = message;
-                chatMessages.appendChild(newMessage);
-                input.value = "";
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value;
+            if (message.trim()) {
+                const messageDiv = document.createElement("div");
+                messageDiv.textContent = message;
+                document.getElementById("chatMessages").appendChild(messageDiv);
+                messageInput.value = '';
             }
         }
 
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        showNextPotato();
     </script>
 </body>
 </html>
