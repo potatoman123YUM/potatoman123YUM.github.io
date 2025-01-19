@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hot Potato - Find Your Spud Soulmate</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFB74D, #FF7043);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .app-header {
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        .card-container {
+            position: relative;
+            height: 500px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+        .card.swipe-left {
+            transform: translateX(-150%) rotate(-30deg);
+            opacity: 0;
+        }
+        .card.swipe-right {
+            transform: translateX(150%) rotate(30deg);
+            opacity: 0;
+        }
+        .potato-image {
+            height: 250px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            position: relative;
+        }
+        .sewing-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background: #E91E63;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            display: none;
+        }
+        .chat-interface {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 100;
+            padding: 20px;
+            flex-direction: column;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        .potato-message {
+            background: #F5F5F5;
+            align-self: flex-start;
+        }
+        .user-message {
+            background: #FFB74D;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .input-area {
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: #FF7043;
+            color: white;
+            cursor: pointer;
+        }
+        .sewing-result {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="app-header">
+            <h1>spudr</h1>
+            <p>potato!</p>
+        </div>
+        
+        <div class="card-container" id="cardContainer"></div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="swipeLeft()">Pass ❌</button>
+            <button onclick="swipeRight()">Love ❤️</button>
+        </div>
+
+        <div class="sewing-result" id="sewingResult"></div>
+    </div>
+
+    <div class="chat-interface" id="chatInterface">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+            <h3 id="chatPotatoName"></h3>
+            <button onclick="closeChat()">Close</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="input-area">
+            <input type="text" id="messageInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const potatoes = [
+            {
+                name: "Russet Richard",
+                bio: "Earthy guy with a heart of gold. Love getting baked 😉",
+                personality: "dad-jokes",
+                messages: [
+                    "Hey there! You look a-peeling! 😄",
+                    "You know, I think we'd make a great mash 🥔",
+                    "Listen... I need to be honest. I'm more of a couch potato 😅sorry."
+                ]
+            },
+            {
+                name: "Sweet Potato Sarah",
+                bio: "Sweet but spicy. Looking for someone to share recipes with!",
+                personality: "foodie",
+                messages: [
+                    "Hi! You've got great taste in potatoes 😊",
+                    "I love how you express yourself! Very refreshing 🌟",
+                   "You’ve got me peeling with laughter! I’m definitely rooting for you!",
+                  "You know, I think we'd make a great mash 🥔",
+                    "I should mention... I'm focusing on my cooking career right now so byeeee👩‍🍳"
+                ]
+            },
+            {
+                name: "Yukon Gold Yuki",
+                bio: "Premium potato seeking premium connection🥰",
+                personality: "luxurious",
+                messages: [
+                    "Darling, you have a certain je ne sais quoi ✨",
+                    "Your energy is absolutely golden 🌟",
+                    "Wow, you're pretty a-peel-ing 😘",
+                  "Well, aren’t you a sweet potato? If I were any more charmed, I’d spud myself!",
+                    "However... I don't think we're in the same produce aisle, if you know what I mean 🛍️"
+                ]
+            }
+        ];
+
+        const sewingResults = [
+            "You sewed a tiny potato costume! 🥔👕",
+            "You made a potato-themed quilt! 🧵🥔",
+            "You created a potato plushie! 🧸🥔",
+            "You stitched a potato bag! 👜🥔"
+        ];
+
+        let currentIndex = 0;
+        let messageCount = 0;
+        let currentPotato = null;
+
+        function showNextPotato() {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = '';
+            
+            if (currentIndex >= potatoes.length) currentIndex = 0;
+            
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const sewingChance = Math.random() < 0.3; // 30% chance for sewing button
+            
+            card.innerHTML = `
+                <div class="potato-image">
+                    🥔
+                    ${sewingChance ? '<button class="sewing-button" onclick="sew()">Sew</button>' : ''}
+                </div>
+                <h2>${potatoes[currentIndex].name}</h2>
+                <p>${potatoes[currentIndex].bio}</p>
+            `;
+            
+            container.appendChild(card);
+            
+            if (sewingChance) {
+                card.querySelector('.sewing-button').style.display = 'block';
+            }
+        }
+
+        function sew() {
+            const result = sewingResults[Math.floor(Math.random() * sewingResults.length)];
+            const resultDiv = document.getElementById('sewingResult');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = result;
+            setTimeout(() => {
+                resultDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function swipeLeft() {
+            const card = document.querySelector('.card');
+            card.classList.add('swipe-left');
+            setTimeout(() => {
+                currentIndex++;
+                showNextPotato();
+            }, 500);
+        }
+
+        function swipeRight() {
+            const card = document.querySelector('.card');
+            card.classList.add('swipe-right');
+            setTimeout(() => {
+                if (Math.random() < 0.2) { // 20% match chance
+                    startChat();
+                } else {
+                    currentIndex++;
+                    showNextPotato();
+                }
+            }, 500);
+        }
+
+        function startChat() {
+            currentPotato = potatoes[currentIndex];
+            messageCount = 0;
+            document.getElementById('chatInterface').style.display = 'flex';
+            document.getElementById('chatPotatoName').textContent = currentPotato.name;
+            document.getElementById('chatMessages').innerHTML = '';
+            
+            // Send first message after a delay
+            setTimeout(() => {
+                addMessage(currentPotato.messages[0], 'potato');
+            }, 1000);
+        }
+
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                messageCount++;
+                
+                setTimeout(() => {
+                    if (messageCount >= 3) {
+                        // Send rejection message
+                        addMessage(currentPotato.messages[2], 'potato');
+                        setTimeout(closeChat, 3000);
+                    } else {
+                        // Send regular response
+                        addMessage(currentPotato.messages[1], 'potato');
+                    }
+                }, 1000);
+            }
+        }
+
+        function closeChat() {
+            document.getElementById('chatInterface').style.display = 'none';
+            currentIndex++;
+            showNextPotato();
+        }
+
+        // Start the app
+        showNextPotato();
+
+        // Add keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') swipeLeft();
+            if (e.key === 'ArrowRight') swipeRight();
+        });
+    </script>
+</body>
+</html>
