@@ -195,6 +195,16 @@
             border-radius: 10px;
             cursor: pointer;
         }
+
+        .back-to-main {
+            background: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -230,6 +240,8 @@
         </div>
     </div>
 
+    <button class="back-to-main" id="backToMain" onclick="backToMain()">Back to Main</button>
+
     <script>
         const names = ["Alex", "Jamie", "Taylor", "Jordan", "Morgan", "Casey", "Dakota", "Riley", "Avery", "Quinn"];
         const descriptions = [
@@ -245,90 +257,18 @@
             "Tech geek who loves coding and gaming. 💻"
         ];
 
-        const potatoes = [];
-        for (let i = 0; i < 100; i++) {
-            const name = names[Math.floor(Math.random() * names.length)];
-            const description = descriptions[Math.floor(Math.random() * descriptions.length)];
-            potatoes.push({
-                name,
-                bio: description,
-                flag: "🥔",
-            });
-        }
+        const prompts = [
+            "Hey, how's it going?",
+            "What's your favorite hobby?",
+            "Tell me something funny!",
+            "What are you passionate about?",
+            "What’s the most interesting thing you’ve learned recently?",
+            "If you could travel anywhere, where would you go?",
+            "What’s your go-to comfort food?",
+            "Are you more of a morning person or night owl?",
+            "What’s one thing that always makes you smile?",
+            "What’s the best book you’ve read recently?"
+        ];
 
-        let currentIndex = 0;
-
-        function showNextPotato() {
-            const container = document.getElementById("cardContainer");
-            container.innerHTML = "";
-            if (currentIndex >= potatoes.length) currentIndex = 0;
-
-            const potato = potatoes[currentIndex];
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = 
-                `<div class="potato-image">
-                    <span class="potato-emoji">${potato.flag}</span>
-                </div>
-                <h2>${potato.name}</h2>
-                <p>${potato.bio}</p>`;
-            container.appendChild(card);
-        }
-
-        function swipeLeft() {
-            currentIndex++;
-            showNextPotato();
-        }
-
-        function swipeRight() {
-            const chance = Math.random();
-            if (chance < 0.4) {
-                showMatchPopup();
-            } else {
-                currentIndex++;
-                showNextPotato();
-            }
-        }
-
-        function showMatchPopup() {
-            const potato = potatoes[currentIndex];
-            document.getElementById("matchedPotatoName").textContent = potato.name;
-            document.getElementById("matchPopup").style.display = "flex";
-        }
-
-        function startChat() {
-            document.getElementById("matchPopup").style.display = "none";
-            document.getElementById("chatInterface").style.display = "flex";
-            const potato = potatoes[currentIndex];
-            document.getElementById("chatPotatoName").textContent = potato.name;
-        }
-
-        function declineChat() {
-            document.getElementById("matchPopup").style.display = "none";
-            currentIndex++;
-            showNextPotato();
-        }
-
-        function closeChat() {
-            document.getElementById("chatInterface").style.display = "none";
-            currentIndex++;
-            showNextPotato();
-        }
-
-        function sendMessage() {
-            const messageInput = document.getElementById("messageInput");
-            const message = messageInput.value;
-            if (message.trim()) {
-                const chatMessages = document.getElementById("chatMessages");
-                const messageElem = document.createElement("div");
-                messageElem.textContent = message;
-                chatMessages.appendChild(messageElem);
-                messageInput.value = "";
-                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
-            }
-        }
-
-        showNextPotato();
-    </script>
-</body>
-</html>
+        const rejectionPrompts = [
+            "Sorry,
